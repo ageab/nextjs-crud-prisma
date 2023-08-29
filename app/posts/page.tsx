@@ -5,7 +5,7 @@ async function getPosts() {
   const response = await fetch(`http://localhost:3000/api/posts`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
-    next: { revalidate: 60 },
+    next: { revalidate: 10 },
   });
   if (!response.ok) return new Error("Internal Error");
   return response.json();

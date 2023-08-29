@@ -6,20 +6,18 @@ async function getPostByID(id: any) {
 
   if (!response.ok) return new Error("Internal Error");
 
-  return {
-    props: { response },
-  };
+  return response.json();
 }
 
-const PostById = async ({params}: any) => {
-
-  const data = await getPostByID(params.postId);
+const PostById = async ({ params }: any) => {
+  const { postId } = params;
+  const data = await getPostByID(postId);
   console.log(data);
 
   return (
     <>
       <h1>Post By ID</h1>
-      {/* {data.title} */}
+      {data.title}
     </>
   );
 };
