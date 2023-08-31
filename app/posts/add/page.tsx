@@ -1,9 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type FormData = {
   title: string;
+  content: string;
 };
 
 const Add = () => {
@@ -16,15 +18,20 @@ const Add = () => {
   } = useForm<FormData>({
     defaultValues: {
       title: "",
+      content: "",
     },
   });
   const onSubmit = async (data: any) => {
-    await fetch(`http://localhost:3000/api/posts`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    console.log(data);
+    try {
+      await fetch(`http://localhost:3000/api/posts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      toast.success("Post successfully Created!");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -39,6 +46,12 @@ const Add = () => {
             className="border"
             name="title"
             id="title"
+          />
+          <textarea
+            {...register("content")}
+            name="content"
+            id="content"
+            className="border"
           />
         </div>
         <button type="submit" className="border button">
